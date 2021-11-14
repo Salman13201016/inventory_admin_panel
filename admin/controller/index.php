@@ -4,8 +4,10 @@
     $error1=$error2=$error3=$success="";
     $cat_type_name=$cat_type_code="";
     if($_SERVER['REQUEST_METHOD']=="POST"){
-        $cat_type_name =trim($_POST['cat_type_name']);
-        $cat_type_code =trim($_POST['cat_type_code']);
+        // $cat_type_name =trim($_POST['cat_type_name']);
+        // $cat_type_code =trim($_POST['cat_type_code']);
+        $cat_type_name =trim($_POST['name']);
+        $cat_type_code =trim($_POST['code']);
         if(empty($cat_type_name) || empty($cat_type_code)){
             if(empty($cat_type_name) && empty($cat_type_code)){
                 $error1 = "Please fill up both forms";
@@ -74,7 +76,7 @@
                 ?>
                 
             </div>
-            <form class="shadow p-4" method="POST" action="index.php">                  
+            <form class="shadow p-4">                  
                 <div class="mb-3">
                     <label for="cat_type_name">Category Type Name</label>
                     <input value="<?php echo $cat_type_name;?>" type="text" class="form-control" name="cat_type_name"  id="cat_type_name" placeholder="Category Type Name">
@@ -98,7 +100,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">Add Category Types</button>
+                    <button type="button" class="btn btn-primary" onclick="Datainsert();">Add Category Types</button>
                 </div>
                 
             </form>
