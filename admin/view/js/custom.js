@@ -1,7 +1,7 @@
 function Datainsert(){
     var cat_type_name = document.getElementById("cat_type_name").value;
     var cat_type_code = document.getElementById("cat_type_code").value;
-    alert(cat_type_name);
+    //alert(cat_type_name);
     $.ajax({
         type: "POST",
         url:"index.php",
