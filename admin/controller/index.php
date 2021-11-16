@@ -8,8 +8,13 @@
         // $cat_type_code =trim($_POST['cat_type_code']);
         $cat_type_name =trim($_POST['name']);
         $cat_type_code =trim($_POST['code']);
+        echo $cat_type_name;
+        //$obj = json_encode($_POST["name"]);
+        //header('Content-Type: application/json');
+        //echo($obj->name);
         if(empty($cat_type_name) || empty($cat_type_code)){
             if(empty($cat_type_name) && empty($cat_type_code)){
+                echo "sadsad";
                 $error1 = "Please fill up both forms";
             }
             else if (empty($cat_type_name)){
@@ -32,6 +37,7 @@
                 mysqli_stmt_bind_param($sql_statment, "ss", $var1,$var2);
                 $var1=$cat_type_name;
                 $var2 = $cat_type_code;
+                echo $var1;
                 $execute = mysqli_stmt_execute($sql_statment);
                 if($execute){
                     $success = "Successfully Inserted";
@@ -62,8 +68,8 @@
         <div id="content">
             <?php include '../view/layout/content_menu.php'; ?>
             <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
+    <div class="row ">
+        <div class="col-md-6">
             <div class="mb-3">
                 <h3>Add Category Types</h3>
                 <?php 
@@ -76,7 +82,7 @@
                 ?>
                 
             </div>
-            <form class="shadow p-4">                  
+            <form class="shadow p-4" method="POST">                  
                 <div class="mb-3">
                     <label for="cat_type_name">Category Type Name</label>
                     <input value="<?php echo $cat_type_name;?>" type="text" class="form-control" name="cat_type_name"  id="cat_type_name" placeholder="Category Type Name">
@@ -85,7 +91,9 @@
 
                             echo '<span style="color:red;">'.$error2.'</span>';
                         }
+                        
                     ?>
+                    <span id="error2" style="display:none;"></span>
                 </div>
 
                 <div class="mb-3">
@@ -104,6 +112,24 @@
                 </div>
                 
             </form>
+        </div>
+        <div class="col-md-6" id="show_table_div">
+            <div class="mb-3">
+                <h3>Show Data</h3>
+                
+            </div>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Cat_type_name</th>
+                    <th scope="col">Cat_type_code</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+                <tbody id="show_data" >
+                    
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
