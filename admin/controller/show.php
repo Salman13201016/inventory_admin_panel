@@ -11,6 +11,8 @@
                 echo '<td>'.'Edit'.'</td>';
                 echo '<td>'.'Delete'.'</td>';
             echo '</tr>';
+            // $output[] = array ($row['cat_type_name'],$row['cat_type_code']);
         }
+        // echo json_encode($output);
     }
 ?>

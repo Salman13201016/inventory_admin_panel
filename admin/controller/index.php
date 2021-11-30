@@ -29,7 +29,7 @@
             
         }
         else{
-            // echo "1";
+            
             $sql = "INSERT INTO category_types (cat_type_name, cat_type_code) VALUES (?, ?)";
             $sql_statment = mysqli_prepare($link,$sql);
             if ($sql_statment){
@@ -48,6 +48,8 @@
                     echo "Oops! Something went wrong. Please try again later.";
                 }
             }
+            // echo "1";
+            
         }
         
     }
@@ -72,6 +74,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <h3>Add Category Types</h3>
+                <span id="main_notification" style="display:none;"></span>
                 <?php 
                     if(!empty($success)){
                         echo '<span style="color:green;">'.$success.'</span>';
@@ -85,7 +88,9 @@
             <form class="shadow p-4" method="POST">                  
                 <div class="mb-3">
                     <label for="cat_type_name">Category Type Name</label>
+                    
                     <input value="<?php echo $cat_type_name;?>" type="text" class="form-control" name="cat_type_name"  id="cat_type_name" placeholder="Category Type Name">
+                    <span id="sub_notification" style="display:none;"></span>
                     <?php 
                         if(!empty($error2)){
 
@@ -99,6 +104,7 @@
                 <div class="mb-3">
                     <label for="cat_type_code">Category Type Code</label>
                     <input value="<?php echo $cat_type_code;?>" type="text" class="form-control" name="cat_type_code" id="cat_type_code" placeholder="Category Type Code">
+                    <span id="sub_notification2" style="display:none;"></span>
                     <?php 
                         if(!empty($error3)){
 
@@ -118,7 +124,7 @@
                 <h3>Show Data</h3>
                 
             </div>
-            <table class="table">
+            <table class="table" id="tableData" class="table table-striped table-bordered table-sm">
             <thead>
                 <tr>
                     <th scope="col">Cat_type_name</th>
@@ -130,6 +136,7 @@
                     
                 </tbody>
             </table>
+            <div id="pagination"></div>
         </div>
     </div>
 </div>
