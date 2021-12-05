@@ -25,13 +25,10 @@ function Datainsert(){
             // document.getElementById("sub_notification2").style.display ="none";
         }
         else if (cat_type_name ==''){
-
-            
             var error2 = "Please Insert Category Type Name";
             document.getElementById("sub_notification").innerHTML = error2;
             document.getElementById("sub_notification").style.display ="block";
             document.getElementById("sub_notification").style.color ="red";
-
             document.getElementById("sub_notification2").style.display ="none";
             document.getElementById("main_notification").style.display ="none";
         }
@@ -43,31 +40,34 @@ function Datainsert(){
             document.getElementById("sub_notification").style.display ="none";
             document.getElementById("main_notification").style.display ="none";
         }
-
-        
     }
     else{
         $.ajax({
             method: "POST",
-            url:"index.php",
+            url:"insert.php",
             data: {
                 name:cat_type_name,
                 code:cat_type_code
             },
             success: function(data){
-                //alert(data);
+                // alert(data);
+                if (data==1){
+                    alert("error");
+                }
+                else{
+                    var success = "Successfully Inserted";
+                    document.getElementById("main_notification").innerHTML = success;
+                    document.getElementById("main_notification").style.display ="block";
+                    document.getElementById("main_notification").style.color ="green";
+                    document.getElementById("sub_notification").style.display ="none";
+                    document.getElementById("sub_notification2").style.display ="none";
+                }
                 showData();
             }
             
         });
-        var success = "Successfully Inserted";
-        document.getElementById("main_notification").innerHTML = success;
-        document.getElementById("main_notification").style.display ="block";
-        document.getElementById("main_notification").style.color ="green";
-        document.getElementById("sub_notification").style.display ="none";
-        document.getElementById("sub_notification2").style.display ="none";
+        
     }
-    
 }
 function showData(){
     $.ajax({
