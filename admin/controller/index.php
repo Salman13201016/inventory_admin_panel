@@ -41,6 +41,7 @@
                 $execute = mysqli_stmt_execute($sql_statment);
                 if($execute){
                     $success = "Successfully Inserted";
+                    echo $success;
                     //header("location: index.php");
 
                 }

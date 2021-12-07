@@ -1,5 +1,10 @@
 $( document ).ready(function() {
+    // event.preventDefault();
     showData();
+    $('#editBtn').on('click', function () {
+        alert("asd");
+    });
+    
 });
 function Datainsert(){
     var cat_type_name = document.getElementById("cat_type_name").value;
@@ -45,14 +50,15 @@ function Datainsert(){
         $.ajax({
             method: "POST",
             url:"insert.php",
+            
             data: {
                 name:cat_type_name,
                 code:cat_type_code
             },
             success: function(data){
-                // alert(data);
+                //alert(data);
                 if (data==1){
-                    alert("error");
+                    alert("Both Values are already existed");
                 }
                 else{
                     var success = "Successfully Inserted";
@@ -69,15 +75,26 @@ function Datainsert(){
         
     }
 }
+function DataEdit(){
+    alert("edit");
+}
 function showData(){
+    // event.preventDefault();
     $.ajax({
+        async: true,
+        cache: false,
+        processData: false,
         method: "POST",
         url:"show.php",
         success: function(data){
+            alert(data);
             $('#show_data').html(data);
+           
             // document.getElementById("show_table_div").style.display="block";
         }
         
     });  
 }
+
+
 

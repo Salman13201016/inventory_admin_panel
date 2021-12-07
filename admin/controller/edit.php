@@ -1,58 +1,56 @@
+<?php include_once '../model/db_config.php'; ?>
+
 <?php
-include_once '../model/db_config.php';
+    $edit_id = $_GET['id'];
+    $show_sql = "SELECT * FROM category_types WHERE cat_type_id = '$edit_id'";
+    $show_sql = mysqli_query($link,$show_sql);
+    $show_sql = mysqli_fetch_array($show_sql);
+    $error1=$error2=$error3=$success="";
+    $cat_type_name=$cat_type_code="";
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+        $cat_type_name =trim($_POST['cat_type_name']);
+        $cat_type_code =trim($_POST['cat_type_code']);
+        // $cat_type_name =trim($_POST['name']);
+        // $cat_type_code =trim($_POST['code']);
+        echo $cat_type_name;
+        //$obj = json_encode($_POST["name"]);
+        //header('Content-Type: application/json');
+        //echo($obj->name);
+        if(empty($cat_type_name) || empty($cat_type_code)){
+            if(empty($cat_type_name) && empty($cat_type_code)){
+                echo "sadsad";
+                $error1 = "Please fill up both forms";
+            }
+            else if (empty($cat_type_name)){
 
-$edit_id = $_GET['id'];
-//echo $edit_id;
-$sql_show = "SELECT * FROM category_types WHERE cat_type_id = '$edit_id'";
-$sql_show = mysqli_query($link,$sql_show);
-$sql_show = mysqli_fetch_array($sql_show);
-$error1=$error2=$error3=$success="";
-$cat_type_name=$cat_type_code="";
-if($_SERVER['REQUEST_METHOD']=="POST"){
-    $cat_type_name =trim($_POST['cat_type_name']);
-    $cat_type_code =trim($_POST['cat_type_code']);
-    // $cat_type_name =trim($_POST['name']);
-    // $cat_type_code =trim($_POST['code']);
-    // echo $cat_type_name;
-    //$obj = json_encode($_POST["name"]);
-    //header('Content-Type: application/json');
-    //echo($obj->name);
-    if(empty($cat_type_name) || empty($cat_type_code)){
-        if(empty($cat_type_name) && empty($cat_type_code)){
-            echo "sadsad";
-            $error1 = "Please fill up both forms";
-        }
-        else if (empty($cat_type_name)){
+                $error2 = "Please Insert Category Type Name";
+                echo $error2;
+            }
+            else if (empty($cat_type_code)){
+                $error3 = "Please Insert Category Type Code";
+            }
 
-            $error2 = "Please Insert Category Type Name";
-            echo $error2;
-        }
-        else if (empty($cat_type_code)){
-            $error3 = "Please Insert Category Type Code";
-        }
-
-        
-    }
-    else{
-        
-        $sql = "UPDATE category_types SET cat_type_name='$cat_type_name', cat_type_code='$cat_type_code' where cat_type_id='$edit_id'";
-        $sql_statment = mysqli_query($link,$sql);
-        if ($sql_statment){
-            header("location: index.php");
+            
         }
         else{
-            echo mysqli_error();
+            
+            $sql = "UPDATE category_types SET cat_type_name='$cat_type_name', cat_type_code='$cat_type_code' WHERE cat_type_id='$edit_id' ";
+            $sql = mysqli_query($link,$sql);
+            if ($sql){
+                $success = "Successfully Edited";
+                header("location: index.php");
+
+            }
+            else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
         }
-        // echo "1";
-        
+            // echo "1";
+            
     }
-    
-}
-// $sql = "SELECT DISTINCT * FROM category_types ORDER BY cat_type_id DESC";
-// $execute = mysqli_query($link,$sql);
-
+        
+        
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -71,7 +69,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     <div class="row ">
         <div class="col-md-6">
             <div class="mb-3">
-                <h3>Add Category Types</h3>
+                <h3>Edit Category Types</h3>
                 <span id="main_notification" style="display:none;"></span>
                 <?php 
                     if(!empty($success)){
@@ -87,7 +85,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <div class="mb-3">
                     <label for="cat_type_name">Category Type Name</label>
                     
-                    <input value="<?php echo $sql_show['cat_type_name'];?>" type="text" class="form-control" name="cat_type_name"  id="cat_type_name" placeholder="Category Type Name">
+                    <input value="<?php echo $show_sql['cat_type_name'];?>" type="text" class="form-control" name="cat_type_name"  id="cat_type_name" placeholder="Category Type Name">
                     <span id="sub_notification" style="display:none;"></span>
                     <?php 
                         if(!empty($error2)){
@@ -101,7 +99,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 
                 <div class="mb-3">
                     <label for="cat_type_code">Category Type Code</label>
-                    <input value="<?php echo $sql_show['cat_type_code'];?>" type="text" class="form-control" name="cat_type_code" id="cat_type_code" placeholder="Category Type Code">
+                    <input value="<?php echo  $show_sql['cat_type_code'];?>" type="text" class="form-control" name="cat_type_code" id="cat_type_code" placeholder="Category Type Code">
                     <span id="sub_notification2" style="display:none;"></span>
                     <?php 
                         if(!empty($error3)){
@@ -112,7 +110,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 </div>
 
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary" >Add Category Types</button>
+                    <button type="submit" class="btn btn-primary">Add Category Types</button>
                 </div>
                 
             </form>
