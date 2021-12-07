@@ -1,9 +1,7 @@
 $( document ).ready(function() {
     // event.preventDefault();
     showData();
-    $('#editBtn').on('click', function () {
-        alert("asd");
-    });
+    
     
 });
 function Datainsert(){
@@ -87,7 +85,7 @@ function showData(){
         method: "POST",
         url:"show.php",
         success: function(data){
-            alert(data);
+            // alert(data);
             $('#show_data').html(data);
            
             // document.getElementById("show_table_div").style.display="block";
