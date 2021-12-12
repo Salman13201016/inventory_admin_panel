@@ -1,13 +1,32 @@
 <?php
     include_once '../model/db_config.php';
-
-    $sql = "SELECT  * FROM category_types ORDER BY cat_type_id DESC";
+    // $page = $_POST['page'];
+    if (isset($_POST['page'])){
+        $page = $_POST["page"];
+    }
+    else{
+        $page = 1;
+    }
+    $record_per_page =5;
+    $start_from = ($page - 1)*$record_per_page; 
+    
+    $output = '';
+    $output .= "  
+      <table class='table table-striped table-bordered table-sm'>  
+           <tr>  
+                <th width='50%'>Category Type Name</th>  
+                <th width='50%'>Category Type Code</th>
+                <th width='50%'>Edit</th>
+                <th width='50%'>Delete</th>   
+           </tr>  
+    ";  
+    $sql = "SELECT  * FROM category_types ORDER BY cat_type_id DESC LIMIT $start_from,$record_per_page ";
     $execute = mysqli_query($link,$sql);
     if($execute->num_rows>0){
         while($row=$execute->fetch_assoc()){
             $id = $row['cat_type_id'];
             $id = (string)$id;
-            echo ($id);  
+            //echo ($id);  
             $ciphering = "AES-128-CTR";
             // Use OpenSSl Encryption method
             $iv_length = openssl_cipher_iv_length($ciphering);
@@ -19,24 +38,36 @@
             // Use openssl_encrypt() function to encrypt the data
             $encryption = openssl_encrypt($id, $ciphering,
             $encryption_key, $options, $encryption_iv);
-            echo ($encryption);
+            //echo ($encryption);
             $decryption_iv = '1234567891011121';
             // Store the decryption key
             $decryption_key = "1234";
             // Use openssl_decrypt() function to decrypt the data
             $decryption=openssl_decrypt ($encryption, $ciphering, 
             $decryption_key, $options, $decryption_iv);
-            echo ($decryption);
-            echo '<tr>';
-                echo '<td class = "edit_td">'.$row['cat_type_name'].'</td>';
-                echo '<td class = "edit_td">'.$row['cat_type_code'].'</td>';
-                echo '<td> <a href ="#" id ="'.$encryption.'" class="btn btn-primary editBtn" role="button">'.'Edit'.'</a></td>';
-                echo '<td> <a class="btn btn-primary " id ="'.$encryption.'" href="#">'.'Delete'.' </a> </td>';
-            echo '</tr>';
+            //echo ($decryption);
+            $output.='<tr>
+                <td class = "edit_td">'.$row['cat_type_name'].'</td>
+                <td class = "edit_td">'.$row['cat_type_code'].'</td>
+                <td> <a href ="#" id ="'.$encryption.'" class="btn btn-primary editBtn" role="button">'.'Edit'.'</a></td>
+                <td> <a class="btn btn-primary deleteBtn" id ="'.$encryption.'" " id ="'.$encryption.'" href="#">'.'Delete'.' </a> </td>
+            </tr>';
             // $output[] = array ($row['cat_type_name'],$row['cat_type_code']);
         }
         // echo json_encode($output);
     }
+
+    $output .= '</table><br /><div align="center">';
+
+    $total_record = "SELECT * FROM category_types";
+    $total_record = mysqli_query($link,$total_record);
+    $total_record = mysqli_num_rows($total_record);
+    $total_pages = ceil($total_record/$record_per_page);
+    for ($page=1;$page<=$total_pages;$page++){
+        $output .= "<span class='pagination_link' style='cursor:pointer; padding:6px; border:1px solid #ccc;' id='".$page."'>".$page."</span>";
+    }
+    $output .= '</div><br /><br />'; 
+    echo $output;
 ?>
 <!-- <!DOCTYPE html>
 <html>
@@ -47,90 +78,3 @@
 </html> -->
 
 <!-- Creating a popup modal -->
-
-<script type="text/javascript">
-
-$( document ).ready(function() {
-    $('.editBtn').on('click', function () {
-        var id = $(this).attr('id');
-        $.ajax({
-            method: "POST",
-            url:"fetch_single_data.php",
-            data:{id:id},
-            dataType:'json',
-            success: function(data){
-                // alert(JSON.stringify(data[0].cat_type_id));
-                localStorage.setItem('name', data[0].cat_type_name);
-                localStorage.setItem('code', data[0].cat_type_code);
-                var options = {
-                    ajaxPrefix:''
-                };
-                new Dialogify('../view/layout/edit_data_form.php', options)
-                .title('Edit Category Types Data')
-                .buttons([
-                {
-                    text:'Cancle',
-                    click:function(e){
-                        this.close();
-                }
-                },
-
-                {
-                    text:'Edit',
-                    type:Dialogify.BUTTON_PRIMARY,
-                    click:function(e)
-                    {
-                        var form_data = new FormData();
-                        form_data.append('name', $('#name').val());
-                        form_data.append('code', $('#code').val());
-                        form_data.append('id',data[0].cat_type_id);
-                        // alert(JSON.stringify(form_data));
-                        $.ajax({
-                            method:"POST",
-                            url:'edit_data.php',
-                            data:form_data,
-                            // dataType:'json',
-                            contentType:false,
-                            cache:false,
-                            processData:false,
-                            success:function(data){
-                                // alert(data);
-                                // event.preventDefault();
-                                $.ajax({
-                                    async: true,
-                                    cache: false,
-                                    processData: false,
-                                    method: "POST",
-                                    url:"show.php",
-                                    success: function(data){
-                                        // alert(data);
-                                        $('#show_data').html(data);
-                                    
-                                        // document.getElementById("show_table_div").style.display="block";
-                                    }
-                                });  
-                                // if(data.error != '')
-                                // {
-                                //     $('#form_response').html('<div class="alert alert-danger">'+data.error+'</div>');
-                                // }
-                                // else
-                                // {
-                                //     $('#form_response').html('<div class="alert alert-success">'+data.success+'</div>');
-                                //     // dataTable.ajax.reload();
-                                // }
-                            }
-                        });
-                    }
-                    }
-                ]).showModal();
-                // $('#show_data').html(data);
-            
-                // document.getElementById("show_table_div").style.display="block";
-            }
-        
-        });  
-    });
-    
-});
-</script>
-  

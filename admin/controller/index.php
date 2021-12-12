@@ -126,18 +126,8 @@
                 
             </div>
             <span id="form_response"></span>
-            <table class="table" id="tableData" class="table table-striped table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">Cat_type_name</th>
-                    <th scope="col">Cat_type_code</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-                <tbody id="show_data" >
-                    
-                </tbody>
-            </table>
+            <div class="table-responsive" id="pagination_data">  
+            </div> 
             <div id="pagination"></div>
         </div>
     </div>
