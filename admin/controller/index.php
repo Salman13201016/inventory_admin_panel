@@ -126,7 +126,9 @@
                 
             </div>
             <span id="form_response"></span>
-            <table class="table" id="tableData" class="table table-striped table-bordered table-sm">
+            <div class="table-responsive" id="pagination_data">  
+            </div>  
+            <!-- <table class="table" id="tableData" class="table table-striped table-bordered table-sm">
             <thead>
                 <tr>
                     <th scope="col">Cat_type_name</th>
@@ -137,8 +139,7 @@
                 <tbody id="show_data" >
                     
                 </tbody>
-            </table>
-            <div id="pagination"></div>
+            </table> -->
         </div>
     </div>
 </div>
