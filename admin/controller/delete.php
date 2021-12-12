@@ -1,8 +1,8 @@
 <?php include_once '../model/db_config.php'; ?>
 <?php
     
-    if(isset($_POST['del_id'])){
-        $del_id =$_POST['del_id'];
+    if(isset($_POST['id'])){
+        $del_id =$_POST['id'];
         $del_id = trim($del_id);
         $ciphering = "AES-128-CTR";
         // Use OpenSSl Encryption method

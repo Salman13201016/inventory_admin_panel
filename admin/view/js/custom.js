@@ -89,7 +89,7 @@ function showData(){
         url:"show.php",
         success: function(data){
             // alert(data);
-            $('#pagination_data').html(data); 
+            $('#pagination_data').html(data);
            
             // document.getElementById("show_table_div").style.display="block";
         }
@@ -121,6 +121,72 @@ function editData(){
                         this.close();
                 }
                 },
+
+                {
+                    text:'Edit',
+                    type:Dialogify.BUTTON_PRIMARY,
+                    click:function(e)
+                    {
+                        var form_data = new FormData();
+                        form_data.append('name', $('#name').val());
+                        form_data.append('code', $('#code').val());
+                        form_data.append('id',data[0].cat_type_id);
+                        // alert(JSON.stringify(form_data));
+                        $.ajax({
+                            method:"POST",
+                            url:'edit_data.php',
+                            data:form_data,
+                            // dataType:'json',
+                            contentType:false,
+                            cache:false,
+                            processData:false,
+                            success:function(data){
+                                showData();
+                            }
+                        });
+                    }
+                    }
+                ]).showModal();
+            }
+        
+        });    
+   }); 
+}
+
+function pagination(page){
+    $.ajax({  
+        url:"show.php",  
+        method:"POST",  
+        data:{page:page},  
+        success:function(data){  
+             $('#pagination_data').html(data);  
+        }  
+   });
+
+
+}
+
+function deleteData(){
+    $(document).on('click', '.deleteBtn', function(){  
+        var id = $(this).attr("id");
+        $.ajax({  
+            url:"delete.php",  
+            method:"POST",  
+            data:{id:id},  
+            cache:false,
+            success:function(data){  
+                 showData();  
+            }  
+       }); 
+    });
+
+}
+
+$(document).on('click', '.pagination_link', function(){  
+    var page = $(this).attr("id");  
+    pagination(page);  
+});  
+
 
                 {
                     text:'Edit',
