@@ -47,7 +47,7 @@
             // Use openssl_decrypt() function to decrypt the data
             $decryption=openssl_decrypt ($encryption, $ciphering, 
             $decryption_key, $options, $decryption_iv);
-            // echo ($decryption);
+            #echo ($decryption);
             $output.= '<tr>
                  <td class = "edit_td">'.$row['cat_type_name'].'</td>
                  <td class = "edit_td">'.$row['cat_type_code'].'</td>
@@ -70,6 +70,3 @@
     $output .= '</div><br /><br />'; 
     echo $output;
 ?>
-
-
-  
