@@ -16,4 +16,5 @@
     });
 </script>
 <script src="../view/js/custom.js"></script>
+<script src="../view/js/register.js"></script>
 </head>
