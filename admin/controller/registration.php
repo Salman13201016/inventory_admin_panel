@@ -161,20 +161,22 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
+                                    <span id="error" style="display:none;"></span>
                                     <input type="text" id="nameValidation" class="form-control"
                                         placeholder="Full Name *" value="" />
                                 </div>
 
                                 <div class="form-group">
+                                    <span id="error2" style="display:none;"></span>
                                     <span id="main_notification" style="display:none;"></span>
                                     <input type="password" id="password" class="form-control" placeholder="Password*"
                                         value="" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" id="conPassword" onchange="myFunction()" class="form-control"
+                                    <input type="password" id="conPassword" onchange="pass_match()" class="form-control"
                                         placeholder="Confirm Password *" value="" />
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <div class="maxl">
                                         <label class="radio inline">
                                             <input type="radio" name="gender" value="male" checked>
@@ -185,8 +187,8 @@
                                             <span>Female </span>
                                         </label>
                                     </div>
-                                </div>
-                                <div class="form-group">
+                                </div> -->
+                                <!-- <div class="form-group">
 
                                     <label for="exampleFormControlFile1">Upload Your Profile Image</label>
                                     <input type="file" id="file" name="file"/>
@@ -194,22 +196,22 @@
                                     <div class='preview'>
                                         <img src="" id="img" width="100" height="100">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Your Email *" value="" />
+                                    <input type="email" id="uEmail" class="form-control" placeholder="Your Email *" value="" />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" minlength="10" maxlength="10" name="txtEmpPhone"
+                                    <input type="text" minlength="10" id="phone_number" maxlength="10" name="txtEmpPhone"
                                         class="form-control" placeholder="Your Phone *" value="" />
                                 </div>
                                 <div class="form-group">
                                     <input type="date" class="form-control" placeholder="Enter Your Answer *"
-                                        value="" />
+                                        value="" id="dob"/>
                                 </div>
                                 <button type="button" class="btnRegister" onclick="register()">Register</button>
                             </div>
